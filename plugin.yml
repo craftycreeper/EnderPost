@@ -1,0 +1,9 @@
+name: EnderPost
+main: net.minebot.enderpost.EnderPostPlugin
+version: 0.1.1
+commands:
+    enderpost:
+        description: EnderPost command
+        aliases: [epost, ep, post]
+        usage: |
+            /enderpost
