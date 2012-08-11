@@ -30,6 +30,7 @@ package net.minebot.enderpost;
 import java.util.List;
 import java.util.Arrays;
 
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Enderman;
@@ -65,6 +66,9 @@ public class EnderPostman {
 		//Hold the parcel
 		holdParcel();
 		
+		//Effect
+		moveEffect();
+		
 		//Notify player
 		if (parcel.isReturned())
 			EnderPostUtil.tellPlayer(player, "A package you sent to " + parcel.getRealRecipient() + " is being returned.");
@@ -85,15 +89,25 @@ public class EnderPostman {
 		
 		enderman = (Enderman)location.getWorld().spawnEntity(location, EntityType.ENDERMAN);
 		
+		//Effect
+		moveEffect();
+		
 		holdParcel();
 		
 		setCleanup(150, null);
 	}
 	
 	private void despawn() {
+		moveEffect();
 		enderman.remove();
 		DeliveryManager.removePostman(this);
 		parcel = null;
+	}
+	
+	private void moveEffect() {
+		Location l = enderman.getLocation();
+		enderman.getLocation().getWorld().playEffect(l, Effect.ENDER_SIGNAL, 0);
+		enderman.getLocation().getWorld().playEffect(l, Effect.EXTINGUISH, 0);
 	}
 	
 	private void holdParcel() {
